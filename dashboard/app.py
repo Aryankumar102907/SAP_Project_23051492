@@ -1,10 +1,9 @@
 """
 dashboard/app.py — Weather Analytics Pipeline Dashboard.
 
-Design: Precision instrument aesthetic — dark, typographically rigorous,
-zero decorative noise. Inspired by financial terminals and NASA displays.
-Typography: Barlow (labels/headings) + Azeret Mono (data/numbers).
-Color palette: Deep navy base, warm amber accent, perceptually-distinct city hues.
+Design: Deep-sea precision instrument — cool aqua-to-lime gradient palette.
+Typography: Outfit (UI) + JetBrains Mono (data).
+Color palette: Deep ocean base, teal/cyan accents, lime-yellow highlights.
 """
 
 import os
@@ -39,20 +38,20 @@ STYLE = """
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
 
 :root {
-  --bg-base:      #1a1610;
-  --bg-surface:   #241f16;
-  --bg-raised:    #2f2a1e;
-  --border-sub:   #3d3626;
-  --border-mid:   #54472f;
-  --text-hi:      #FEFDDF;
-  --text-mid:     #d4c99a;
-  --text-lo:      #8a7d5a;
-  --accent:       #E87F24;
-  --accent2:      #FFC81E;
-  --city-col:     #73A5CA;
-  --ok:           #6aaa78;
-  --warn:         #E87F24;
-  --fail:         #c45a4a;
+  --bg-base:      #000000;
+  --bg-surface:   #0d0d1a;
+  --bg-raised:    #15152a;
+  --border-sub:   #2a2a4a;
+  --border-mid:   #3d3d6a;
+  --text-hi:      #CBCCFF;
+  --text-mid:     #9296F0;
+  --text-lo:      #5B63B7;
+  --accent:       #9296F0;
+  --accent2:      #CBCCFF;
+  --city-col:     #9296F0;
+  --ok:           #7e81f5;
+  --warn:         #CBCCFF;
+  --fail:         #ff6b8a;
 }
 
 html, body, [class*="css"] {
@@ -62,7 +61,7 @@ html, body, [class*="css"] {
 }
 
 section[data-testid="stSidebar"] {
-  background: #120f09 !important;
+  background: #000000 !important;
   border-right: 1px solid var(--border-sub) !important;
 }
 section[data-testid="stSidebar"] > div { padding-top: 8px; }
@@ -95,9 +94,9 @@ div[data-testid="metric-container"] {
   background: var(--bg-surface) !important;
   border: 1px solid var(--border-sub) !important;
   border-top: 2px solid var(--accent) !important;
-  border-radius: 4px !important;
+  border-radius: 6px !important;
   padding: 20px !important;
-  box-shadow: 0 2px 8px rgba(232,127,36,0.08) !important;
+  box-shadow: 0 2px 16px rgba(146,150,240,0.12) !important;
 }
 div[data-testid="metric-container"] label {
   font-family: 'Outfit', sans-serif !important;
@@ -128,17 +127,17 @@ div[data-testid="stRadio"] [aria-checked="true"] label {
 .dataframe { font-family: 'JetBrains Mono', monospace !important; font-size: 0.78rem !important; color: var(--text-hi) !important; }
 .dataframe th {
   background: var(--bg-raised) !important;
-  color: var(--accent) !important;
+  color: var(--accent2) !important;
   font-family: 'Outfit', sans-serif !important;
   font-size: 0.65rem !important;
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
   font-weight: 700 !important;
 }
-.dataframe td { background: var(--bg-surface) !important; color: var(--text-hi) !important; }
+.dataframe td { background: var(--bg-surface) !important; color: var(--text-mid) !important; }
 
 div[data-testid="stAlert"] {
-  border-radius: 4px !important;
+  border-radius: 6px !important;
   font-family: 'Outfit', sans-serif !important;
   font-size: 0.875rem !important;
   background: var(--bg-raised) !important;
@@ -189,48 +188,51 @@ def _no_data_msg() -> None:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Palette — Warm amber/golden theme
+# Palette — Skip Gradient: #000000 → #CBCCFF → #9296F0 → #5B63B7
 # ─────────────────────────────────────────────────────────────────────────────
-# Per-city distinct, high-contrast colours on dark warm bg
 CITY_COLORS = {
-    "Delhi":     "#E87F24",  # Orange
-    "Mumbai":    "#FFC81E",  # Yellow
-    "Kolkata":   "#73A5CA",  # Steel Blue
-    "Chennai":   "#e05c5c",  # Warm Red
-    "Bangalore": "#6aab7a",  # Sage Green
-    "Hyderabad": "#c77dff",  # Lavender
-    "Ahmedabad": "#ff9f43",  # Amber
-    "Pune":      "#48cae4",  # Cyan
-    "Surat":     "#FEFDDF",  # Cream
-    "Jaipur":    "#f08080",  # Light Coral
+    "Delhi":     "#CBCCFF",  # Lavender
+    "Mumbai":    "#9296F0",  # Medium Purple
+    "Kolkata":   "#5B63B7",  # Deep Blue
+    "Chennai":   "#a8aaff",  # Soft Lavender
+    "Bangalore": "#7880e8",  # Blue-Purple
+    "Hyderabad": "#d4d5ff",  # Pale Lavender
+    "Ahmedabad": "#6b72d0",  # Muted Purple
+    "Pune":      "#b0b2f8",  # Light Purple
+    "Surat":     "#878ae0",  # Mid Purple
+    "Jaipur":    "#4a5299",  # Dark Blue
 }
 
 STATUS_COLORS = {
-    "Hot":      "#E87F24",
-    "Warm":     "#FFC81E",
-    "Pleasant": "#6aab7a",
-    "Cold":     "#73A5CA",
+    "Hot":      "#ff6b8a",
+    "Warm":     "#9296F0",
+    "Pleasant": "#7880e8",
+    "Cold":     "#5B63B7",
 }
-ACCENT       = "#E87F24"
-TEXT_MID     = "#d4c99a"
-TEXT_LO      = "#8a7d5a"
-SURFACE_RGBA = "rgba(36,31,22,0.97)"
+ACCENT       = "#9296F0"
+TEXT_MID     = "#9296F0"
+TEXT_LO      = "#5B63B7"
+SURFACE_RGBA = "rgba(13,13,26,0.97)"
 FONT_DATA    = "JetBrains Mono"
 FONT_UI      = "Outfit"
 
 def get_ax(figsize=(12, 4.5), xlabel=None, ylabel=None):
-    """Apply warm-theme styling to a matplotlib figure and return it."""
+    """Skip Gradient palette: black base, lavender/purple labels — fully visible."""
     fig, ax = plt.subplots(figsize=figsize)
-    fig.patch.set_facecolor('#1e1a10')
-    ax.set_facecolor('#241f16')
-    ax.grid(color='#3d3626', linestyle=':', linewidth=0.8, zorder=0)
+    fig.patch.set_facecolor('#000000')
+    ax.set_facecolor('#0d0d1a')
+    ax.grid(color='#1e1e3a', linestyle='--', linewidth=0.7, zorder=0)
     for spine in ['top', 'right']:
         ax.spines[spine].set_visible(False)
     for spine in ['left', 'bottom']:
-        ax.spines[spine].set_color('#54472f')
-    ax.tick_params(colors='#8a7d5a', labelsize=8)
-    if xlabel: ax.set_xlabel(xlabel, color='#d4c99a', fontsize=9, fontweight='bold')
-    if ylabel: ax.set_ylabel(ylabel, color='#d4c99a', fontsize=9, fontweight='bold')
+        ax.spines[spine].set_color('#5B63B7')
+    ax.tick_params(colors='#CBCCFF', labelsize=9, which='both')
+    ax.xaxis.label.set_color('#CBCCFF')
+    ax.yaxis.label.set_color('#CBCCFF')
+    if xlabel:
+        ax.set_xlabel(xlabel, color='#CBCCFF', fontsize=10, fontweight='bold', labelpad=8)
+    if ylabel:
+        ax.set_ylabel(ylabel, color='#CBCCFF', fontsize=10, fontweight='bold', labelpad=8)
     return fig, ax
 
 
@@ -241,16 +243,16 @@ with st.sidebar:
     st.markdown("""<div style="padding:8px 16px 20px;">
         <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;
                     letter-spacing:0.16em;text-transform:uppercase;
-                    color:#54472f;margin-bottom:4px;">PIPELINE</div>
+                    color:#2a2a4a;margin-bottom:4px;">PIPELINE</div>
         <div style="font-family:'Outfit',sans-serif;font-size:1.1rem;
-                    font-weight:800;color:#FFC81E;letter-spacing:-0.01em;
+                    font-weight:800;color:#CBCCFF;letter-spacing:-0.01em;
                     line-height:1.2;">Weather Analytics</div>
         <div style="font-family:'Outfit',sans-serif;font-size:0.78rem;
-                    color:#8a7d5a;margin-top:2px;">
+                    color:#5B63B7;margin-top:2px;">
             10 Major Metro Hubs</div>
     </div>""", unsafe_allow_html=True)
 
-    st.markdown("""<div style="height:1px;background:#3d3626;margin:0 16px 16px;"></div>""",
+    st.markdown("""<div style="height:1px;background:#2a2a4a;margin:0 16px 16px;"></div>""",
                 unsafe_allow_html=True)
 
     page = st.radio(
@@ -259,13 +261,13 @@ with st.sidebar:
         label_visibility="collapsed",
     )
 
-    st.markdown("""<div style="height:1px;background:#3d3626;margin:16px 16px 12px;"></div>""",
+    st.markdown("""<div style="height:1px;background:#2a2a4a;margin:16px 16px 12px;"></div>""",
                 unsafe_allow_html=True)
     st.markdown(
         f"""<div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;
-                    color:#8a7d5a;padding:0 16px;line-height:2;">
+                    color:#5B63B7;padding:0 16px;line-height:2;">
             Refresh interval<br>
-            <span style="color:#FFC81E;">{config.FETCH_INTERVAL_MINUTES} min</span>
+            <span style="color:#CBCCFF;">{config.FETCH_INTERVAL_MINUTES} min</span>
         </div>""",
         unsafe_allow_html=True,
     )
@@ -306,8 +308,8 @@ if page == "Live Conditions":
             comfort  = row.get("comfort_level", "-")
             city_c   = CITY_COLORS.get(city, "#8899b4")
             
-            bg_colors = {"Hot": "#dc2626", "Warm": "#ea580c", "Pleasant": "#16a34a", "Cold": "#2563eb"}
-            badge_bg = bg_colors.get(comfort, "#4a5e78")
+            bg_colors = {"Hot": "#ff6b8a", "Warm": "#9296F0", "Pleasant": "#7880e8", "Cold": "#5B63B7"}
+            badge_bg = bg_colors.get(comfort, "#3d3d6a")
             
             period   = "☀️ Day" if row.get("is_daytime") else "🌙 Night"
             
@@ -323,34 +325,34 @@ if page == "Live Conditions":
 
             with cols[idx % 3]:
                 card_html = f"""
-<div style="background:#241f16;border:1px solid #3d3626;border-top:3px solid {city_c};border-radius:6px;padding:18px 18px 14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(232,127,36,0.08);">
+<div style="background:#0d0d1a;border:1px solid #2a2a4a;border-top:3px solid {city_c};border-radius:8px;padding:18px 18px 14px;margin-bottom:12px;box-shadow:0 4px 20px rgba(146,150,240,0.12);">
     <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
         <span style="font-family:'Outfit',sans-serif;font-size:0.7rem;font-weight:800;letter-spacing:0.13em;text-transform:uppercase;color:{city_c};">{city}</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#8a7d5a;">{period}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#5B63B7;">{period}</span>
     </div>
-    <div style="font-family:'JetBrains Mono',monospace;font-size:2.5rem;font-weight:600;color:#FEFDDF;letter-spacing:-0.03em;line-height:1;margin:12px 0 3px;">{row['temp_c']:.1f}&deg;C</div>
-    <div style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#8a7d5a;margin-bottom:8px;">feels {row['feels_like_c']:.1f}&deg;C</div>
-    <div style="font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:500;color:#d4c99a;text-transform:capitalize;margin-bottom:12px;">{w_icon} {row.get('weather_desc', '-')}</div>
-    <div style="height:1px;background:#3d3626;margin-bottom:12px;"></div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:2.5rem;font-weight:600;color:#CBCCFF;letter-spacing:-0.03em;line-height:1;margin:12px 0 3px;">{row['temp_c']:.1f}&deg;C</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#5B63B7;margin-bottom:8px;">feels {row['feels_like_c']:.1f}&deg;C</div>
+    <div style="font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:500;color:#9296F0;text-transform:capitalize;margin-bottom:12px;">{w_icon} {row.get('weather_desc', '-')}</div>
+    <div style="height:1px;background:#2a2a4a;margin-bottom:12px;"></div>
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div>
-            <div style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#8a7d5a;">Humidity</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:#FEFDDF;">{row['humidity_pct']:.0f}%</div>
+            <div style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#5B63B7;">Humidity</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:#CBCCFF;">{row['humidity_pct']:.0f}%</div>
         </div>
         <div>
-            <div style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#8a7d5a;">Wind</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:#FEFDDF;">{row['wind_speed_ms']:.1f} m/s</div>
+            <div style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#5B63B7;">Wind</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:#CBCCFF;">{row['wind_speed_ms']:.1f} m/s</div>
         </div>
         <div>
-            <div style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#8a7d5a;">Cloud</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:#FEFDDF;">{row['cloud_pct']:.0f}%</div>
+            <div style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#5B63B7;">Cloud</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:#CBCCFF;">{row['cloud_pct']:.0f}%</div>
         </div>
         <div>
-            <div style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#8a7d5a;">Pressure</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:#FEFDDF;">{row['pressure_hpa']:.0f} hPa</div>
+            <div style="font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#5B63B7;">Pressure</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:#CBCCFF;">{row['pressure_hpa']:.0f} hPa</div>
         </div>
     </div>
-    <div style="margin-top:14px;display:inline-block;background:{badge_bg};color:#1a1610;padding:4px 10px;border-radius:4px;font-family:'Outfit',sans-serif;font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;">{comfort}</div>
+    <div style="margin-top:14px;display:inline-block;background:{badge_bg};color:#000000;padding:4px 10px;border-radius:4px;font-family:'Outfit',sans-serif;font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;">{comfort}</div>
 </div>
 """
                 st.markdown(card_html, unsafe_allow_html=True)
@@ -503,7 +505,7 @@ elif page == "City Comparison":
             fig_bar, ax_bar = get_ax(ylabel="deg C")
             sns.barplot(data=df_daily, x="date", y="avg_temp", hue="city", palette=palette_daily, ax=ax_bar, zorder=3)
             if len(sel_cmps) <= 10:
-                ax_bar.legend(frameon=False, labelcolor='#FEFDDF', loc='upper right', fontsize=9)
+                ax_bar.legend(frameon=False, labelcolor='#CBCCFF', loc='upper right', fontsize=9)
             else:
                 ax_bar.get_legend().remove()
             st.pyplot(fig_bar, transparent=True)
@@ -515,7 +517,7 @@ elif page == "City Comparison":
             fig_scatter, ax_scatter = get_ax(xlabel="Temperature (C)", ylabel="Humidity (%)")
             sns.scatterplot(data=df_raw, x="temp_c", y="humidity_pct", hue="city", palette=palette_raw, ax=ax_scatter, s=70, alpha=0.9, edgecolor=None, zorder=3)
             if len(sel_cmps) <= 10:
-                ax_scatter.legend(frameon=False, labelcolor='#FEFDDF')
+                ax_scatter.legend(frameon=False, labelcolor='#CBCCFF')
             else:
                 l = ax_scatter.get_legend()
                 if l: l.remove()

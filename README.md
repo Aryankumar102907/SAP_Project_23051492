@@ -6,7 +6,7 @@
 
 ## Overview
 
-The Real-Time Weather Analytics Pipeline ingests live weather data from OpenWeatherMap for the **Top 10 Indian Metropolitan Hubs** (Mumbai, Delhi, Bangalore, Hyderabad, Chennai, Kolkata, Pune, Ahmedabad, Jaipur, Lucknow). It cleans and enriches data with derived metrics (Heat Index, Wind Chill), persists it in a SQLite star schema and a Parquet data lake, and presents the results through a premium, warm-charcoal themed Streamlit dashboard.
+The Real-Time Weather Analytics Pipeline ingests live weather data from OpenWeatherMap for the **Top 10 Indian Metropolitan Hubs** (Mumbai, Delhi, Bangalore, Hyderabad, Chennai, Kolkata, Pune, Ahmedabad, Surat, Jaipur). It cleans and enriches data with derived metrics (Heat Index, Wind Chill), persists it in a SQLite star schema and a Parquet data lake, and presents the results through a premium **Aqua-to-Lime** themed Streamlit dashboard — featuring a deep-ocean `#061520` base with teal `#00CDCA`, lime `#A7F18C`, and yellow `#F9F871` accents.
 
 ---
 
@@ -164,14 +164,33 @@ weather-pipeline/
 
 ## Dashboard Screenshots
 
-### 1. Live Conditions
-![Live Conditions](live_conditions_page_1776331508387.png)
+> **Skip Gradient Palette** — Pure black base `#000000` · Lavender `#CBCCFF` · Medium Purple `#9296F0` · Deep Blue `#5B63B7`
 
-### 2. Historical Trends
-![Historical Trends](historical_trends_temp_graph_1776331581694.png)
+### 🌡️ Live Conditions
+Real-time city weather cards with per-city color-coded borders and comfort badges.
 
-### 3. City Comparison
-![City Comparison](city_comparison_page_temp_1776331553749.png)
+![Live Conditions](screenshots/skip_live.png)
+
+---
+
+### 📈 Historical Trends
+Multi-city temperature, humidity, and wind trends over time with fully visible axis labels and legend.
+
+![Historical Trends](screenshots/skip_trends.png)
+
+---
+
+### 🏙️ City Comparison
+Side-by-side grouped bar charts for comparing metrics across selected metro hubs.
+
+![City Comparison](screenshots/skip_comparison.png)
+
+---
+
+### ⚙️ Pipeline Health
+Run audit log with quality scores, success rates, and data quality metrics.
+
+![Pipeline Health](screenshots/skip_health.png)
 
 ---
 
