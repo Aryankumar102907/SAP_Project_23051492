@@ -328,12 +328,16 @@ The pipeline follows a five-stage architecture: \textbf{Ingest $\rightarrow$ Tra
   \centering
   \begin{tikzpicture}[
     box/.style={draw=kiitblue, fill=kiitblue!10, rounded corners=4pt,
-                minimum width=3.0cm, minimum height=0.9cm,
+                minimum width=3.0cm, minimum height=1.0cm,
                 font=\small\bfseries, text=kiitblue, align=center},
     store/.style={draw=accentteal, fill=accentteal!10, rounded corners=4pt,
-                  minimum width=3.0cm, minimum height=0.9cm,
+                  minimum width=3.0cm, minimum height=1.0cm,
                   font=\small\bfseries, text=accentteal, align=center},
-    arr/.style={-{Stealth[length=6pt]}, thick, color=kiitblue!60},
+    sched/.style={draw=darkgray!70, fill=lightgray, rounded corners=4pt,
+                  minimum width=3.0cm, minimum height=1.0cm,
+                  font=\small\bfseries, text=darkgray, align=center},
+    arr/.style={-{Stealth[length=6pt]}, thick, color=kiitblue!70},
+    darr/.style={-{Stealth[length=6pt]}, thick, color=darkgray, dashed},
   ]
     %% Row 1: Pipeline stages (left to right)
     \node[box]   at (0,0)    (api)    {OpenWeatherMap\\API};
@@ -344,18 +348,18 @@ The pipeline follows a five-stage architecture: \textbf{Ingest $\rightarrow$ Tra
     \node[store] at (12.6,-2) (sqlite) {SQLite\\Star Schema};
     \node[store] at (8.4,-2)  (parq)   {Parquet\\Data Lake};
     \node[box]   at (4.2,-2)  (dash)   {Streamlit\\Dashboard};
-    %% Scheduler label
-    \node[font=\footnotesize\itshape, text=darkgray] at (2.1,-1) {APScheduler};
-    %% Arrows row 1
-    \draw[arr] (api)    -- (ingest);
-    \draw[arr] (ingest) -- (proc);
-    \draw[arr] (proc)   -- (dq);
-    %% Arrows down + row 2
-    \draw[arr] (dq)     -- (sqlite);
-    \draw[arr] (dq)     -- (parq);
-    \draw[arr] (sqlite) -- (dash);
-    %% Scheduler loop arrow
-    \draw[arr, dashed] (0,-1) -- (ingest.south west);
+    %% APScheduler as a proper labeled box (bottom-left)
+    \node[sched] at (0,-2)    (sched)  {APScheduler};
+    %% Row 1 arrows
+    \draw[arr]  (api)    -- (ingest);
+    \draw[arr]  (ingest) -- (proc);
+    \draw[arr]  (proc)   -- (dq);
+    %% Clean U-turn: straight down then chain left
+    \draw[arr]  (dq)     -- (sqlite);
+    \draw[arr]  (sqlite) -- (parq);
+    \draw[arr]  (parq)   -- (dash);
+    %% APScheduler triggers the API fetch (dashed)
+    \draw[darr] (sched)  -- (api);
   \end{tikzpicture}
   \end{tcolorbox}
   \caption{High-level architecture of the Weather Analytics Pipeline}
