@@ -2,7 +2,7 @@
 
 % ── Packages ──────────────────────────────────────────────────────────────────
 \usepackage[a4paper, margin=1in]{geometry}
-\usepackage{graphicx}
+
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage{longtable}
@@ -17,7 +17,6 @@
 \usepackage{setspace}
 \usepackage{parskip}
 \usepackage{caption}
-\usepackage{subcaption}
 \usepackage{tikz}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -229,7 +228,6 @@ The project demonstrates a complete, end-to-end data engineering workflow -- fro
 % ── Table of Contents ─────────────────────────────────────────────────────────
 \tableofcontents
 \listoftables
-\listoffigures
 
 % ══════════════════════════════════════════════════════════════════════════════
 % CHAPTER 1 — INTRODUCTION
@@ -629,23 +627,13 @@ All charts are rendered with \textbf{Matplotlib / Seaborn} on a transparent back
 
 Displays a card-per-city grid with the latest temperature, humidity, wind speed, and comfort badge. Each card border is colour-coded by the city's comfort level. The page auto-refreshes every 60 seconds using Streamlit's \texttt{st.rerun} mechanism triggered via \texttt{time.sleep}.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{screenshots/skip_live.png}
-  \caption{Live Conditions page -- real-time city weather cards}
-  \label{fig:live}
-\end{figure}
+
 
 \subsection{Page 2 — Historical Trends}
 
 Presents interactive multi-city time-series charts for temperature, humidity, and wind speed. Users can filter by city (multi-select) and date range. Charts include per-city colour-coded lines with smart marker placement to prevent overplotting when data density is high.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{screenshots/skip_trends.png}
-  \caption{Historical Trends page -- multi-city temperature and humidity over time}
-  \label{fig:trends}
-\end{figure}
+
 
 \subsection{Page 3 — City Comparison}
 
@@ -656,23 +644,13 @@ Provides side-by-side comparisons across all 10 cities using:
   \item \textbf{Summary statistics table} showing mean, min, max, and standard deviation per city.
 \end{itemize}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{screenshots/skip_comparison.png}
-  \caption{City Comparison page -- grouped bar charts and scatter analysis}
-  \label{fig:comparison}
-\end{figure}
+
 
 \subsection{Page 4 — Pipeline Health}
 
 Displays the last 20 pipeline run records from \texttt{pipeline\_log} and a quality score timeline from \texttt{quality\_log}. Operators can instantly identify failed runs or declining data quality trends.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{screenshots/skip_health.png}
-  \caption{Pipeline Health page -- execution audit log and quality score trend}
-  \label{fig:health}
-\end{figure}
+
 
 % ══════════════════════════════════════════════════════════════════════════════
 % CHAPTER 7 — DATA QUALITY
