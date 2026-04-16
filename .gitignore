@@ -7,3 +7,11 @@ logs/*.log
 .DS_Store
 venv/
 *.egg-info/
+
+# Tool-specific files
+.agents/
+.continue/
+.junie/
+.trae/
+.impeccable.md
+skills-lock.json
