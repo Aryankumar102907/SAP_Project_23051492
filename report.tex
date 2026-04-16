@@ -337,15 +337,15 @@ The pipeline follows a five-stage architecture: \textbf{Ingest $\rightarrow$ Tra
   ]
     %% Row 1: Pipeline stages (left to right)
     \node[box]   at (0,0)    (api)    {OpenWeatherMap\\API};
-    \node[box]   at (3.8,0)  (ingest) {Ingestion\\Layer};
-    \node[box]   at (7.6,0)  (proc)   {Processing\\Layer};
-    \node[box]   at (11.4,0) (dq)     {Data Quality\\Gate};
+    \node[box]   at (4.2,0)  (ingest) {Ingestion\\Layer};
+    \node[box]   at (8.4,0)  (proc)   {Processing\\Layer};
+    \node[box]   at (12.6,0) (dq)     {Data Quality\\Gate};
     %% Row 2: Storage / presentation (right to left mirrors row 1)
-    \node[store] at (11.4,-2) (sqlite) {SQLite\\Star Schema};
-    \node[store] at (7.6,-2)  (parq)   {Parquet\\Data Lake};
-    \node[box]   at (3.8,-2)  (dash)   {Streamlit\\Dashboard};
+    \node[store] at (12.6,-2) (sqlite) {SQLite\\Star Schema};
+    \node[store] at (8.4,-2)  (parq)   {Parquet\\Data Lake};
+    \node[box]   at (4.2,-2)  (dash)   {Streamlit\\Dashboard};
     %% Scheduler label
-    \node[font=\footnotesize\itshape, text=darkgray] at (1.9,-1) {APScheduler};
+    \node[font=\footnotesize\itshape, text=darkgray] at (2.1,-1) {APScheduler};
     %% Arrows row 1
     \draw[arr] (api)    -- (ingest);
     \draw[arr] (ingest) -- (proc);
@@ -543,8 +543,8 @@ The relational layer follows the Kimball star schema pattern with three dimensio
     \node[fact] at (0,0)    (fw)  {fact\_weather\\(hourly grain)};
     %% Dimension tables at cardinal positions
     \node[dim]  at (0, 2.8)  (dc)  {dim\_city};
-    \node[dim]  at (-4.2, 0) (dd)  {dim\_date};
-    \node[dim]  at ( 4.2, 0) (dco) {dim\_condition};
+    \node[dim]  at (-4.8, 0) (dd)  {dim\_date};
+    \node[dim]  at ( 4.8, 0) (dco) {dim\_condition};
     %% Arrows with FK labels
     \draw[arr] (dc)  -- (fw) node[lbl, right=2pt, midway] {city\_id};
     \draw[arr] (dd)  -- (fw) node[lbl, above=2pt, midway] {date\_id};
